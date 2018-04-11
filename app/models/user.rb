@@ -1,6 +1,9 @@
 require 'openssl'
 
 class User < ApplicationRecord
+
+  before_validation :downcase_username  # запускаем метод перевода username в нижний регистр перед валидацией
+
   # параметры работы модуля шифрования паролей
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
@@ -17,13 +20,11 @@ class User < ApplicationRecord
   # Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
   validates :username, length: { maximum: 40 }, format: { with: /\A[-a-z-A-Z0-9_]+\z/ }
 
-  # before_save :downcase_username
+  # before_save { username.downcase! }
 
-  before_save { username.downcase! }
-
-  # def downcase_username
-  #   self.username.downcase!
-  # end
+  def downcase_username
+    self.username = self.username.try(:downcase)
+  end
 
 
   attr_accessor :password
