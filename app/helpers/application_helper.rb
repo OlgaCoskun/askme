@@ -7,7 +7,7 @@ module ApplicationHelper
     end
   end
 
-  def questions_count(question)
+  def questions_count(question, krokodil, krokodila, krokodilov)
     number = question.count
     if number == nil || !number.is_a?(Numeric)
       number = 0
@@ -16,26 +16,26 @@ module ApplicationHelper
     ostatok1 = number % 100  # вот сюда строку перенесла
 
     if ostatok1.between?(11, 14) # этот блок добавила)
-      return "#{number} вопросов"
+      return "#{number} " + krokodilov
     end
 
     ostatok = number % 10
 
     # Для 1 — именительный падеж (Кто?/Что? — крокодил)
     if ostatok == 1
-      return "#{number} вопрос"
+      return "#{number} " + krokodil
     end
 
     # Для 2-4 — родительный падеж (2 Кого?/Чего? — крокодилов)
     if ostatok.between?(2, 4)
-      return "#{number} вопроса"
+      return "#{number} " + krokodila
     end
 
     # 5-9 или ноль — родительный падеж и множественное число (8 Кого?/Чего? —
     # крокодилов)
 
     if ostatok.between?(5, 9) || ostatok == 0
-      return "#{number} вопросов"
+      return "#{number} " + krokodilov
     end
   end
 end
