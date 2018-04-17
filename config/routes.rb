@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'users#index'
 
-  resources :users
+  resources :users, except: [:destroy] # исключая действие удалить
   resources :questions
 
   # get 'users/index'
