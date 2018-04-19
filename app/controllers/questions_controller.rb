@@ -34,16 +34,30 @@ class QuestionsController < ApplicationController
   end
 
   private
-    def load_question
-      @question = Question.find(params[:id])
-    end
 
+  # Если загруженный из базы вопрос не пренадлежит и текущему залогиненному
+  # пользователю — посылаем его с помощью описанного в контроллере
+  # ApplicationController метода reject_user.
   def authorize_user
     reject_user unless @question.user == current_user
   end
 
-    # Only allow a trusted parameter "white list" through.
-    def question_params
+  # Загружаем из базы запрошенный вопрос, находя его по params[:id].
+  def load_question
+    @question = Question.find(params[:id])
+  end
+
+  # Явно задаем список разрешенных параметров для модели Question. Мы говорим,
+  # что у хэша params должен быть ключ :question. Значением этого ключа может
+  # быть хэш с ключами: :user_id и :text. Другие ключи будут отброшены.
+  def question_params
+    # Защита от уязвимости: если текущий пользователь — адресат вопроса,
+    # он может менять ответы на вопрос, ему доступно также поле :answer.
+    if current_user.present? &&
+      params[:question][:user_id].to_i == current_user.id
       params.require(:question).permit(:user_id, :text, :answer)
+    else
+      params.require(:question).permit(:user_id, :text)
     end
+  end
 end
