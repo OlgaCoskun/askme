@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :loade_user, except: [:index, :create, :new]
-  before_action :authorize_user, except: [:index, :new, :create, :show]
+  before_action :loade_user, except: [:index, :create, :new, :destroy]
+  before_action :authorize_user, except: [:index, :new, :create, :show, :destroy]
 
   def index
     @users = User.all
@@ -48,6 +48,13 @@ class UsersController < ApplicationController
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
+  end
+
+  def destroy
+    session[:user_id] = nil
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_path
   end
 
   private
