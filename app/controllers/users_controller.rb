@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_url, notice: 'Пользователь успешно зарегистрирован'
+      redirect_to user_path(@user), notice: 'Пользователь успешно зарегистрирован'
     else
       render 'new'
     end
