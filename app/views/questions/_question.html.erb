@@ -22,6 +22,13 @@
     </div>
   </div>
 
+    <%# Добавим ссылку на автора вопроса %>
+<!--    <div class="question-date">-->
+      <%#= link_to "@#{question.author_id}", user_path(question.user) %>
+      <%# link_to "@#{current_user.username}", user_path(current_user) %>
+<!--    </div>-->
+<!--  </div>-->
+
   <%# Если адресат вопроса — текущий пользователь, он может редактировать вопрос %>
   <%# и отвечать на него %>
   <% if question.user == current_user %>
