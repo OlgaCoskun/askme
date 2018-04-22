@@ -13,6 +13,9 @@ class User < ApplicationRecord
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
+  # Проверка для поля color
+  validates :color, format: {with: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/}
+
   # Проверка формата электронной почты пользователя
   validates_format_of :email, :with => /@/
 

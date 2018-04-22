@@ -10,8 +10,9 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
+    @question.author = current_user
+
     if @question.save
-      @question.user = current_user
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
