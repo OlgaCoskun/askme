@@ -3,6 +3,7 @@ require 'openssl'
 class User < ApplicationRecord
 
   before_validation :downcase_username  # запускаем метод перевода username в нижний регистр перед валидацией
+  before_validation :set_default_color # устновим цвет фона для юзер профайла
 
   # параметры работы модуля шифрования паролей
   ITERATIONS = 20000
@@ -36,6 +37,10 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   before_save :encrypt_password
+
+  def set_default_color
+    self.color == '#000000' if color.nil?
+  end
 
   def encrypt_password
     if self.password.present?

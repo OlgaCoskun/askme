@@ -26,8 +26,6 @@ class SessionsController < ApplicationController
 
   # Удаляет сессию залогиненного юзера
   def destroy
-    log_out if logged_in?
-    redirect_to root_url
 
     # Затигаем в сесси значение ключа :user_id
     session[:user_id] = nil
