@@ -38,14 +38,6 @@
         <%= f.text_field :avatar_url, class: 'form-text-field' %>
       </div>
 
-      <%# Добавили цвет фона для профиля пользователя %>
-<!--      <div class="form-field">-->
-        <%#= f.label 'Введите цвет в формате #000000', class: 'form-label' %>
-        <%#= f.text_field :color, class: 'form-text-field' %>
-<!--      </div>-->
-
-<!--      <input id="color" name="user[color]" type="color" value="#000555"-->
-
       <div class="form-field">
         <%= f.label 'Цвет фона вашего профиля', class: 'form-label' %>
         <%= color_field(:user, :color) %>
