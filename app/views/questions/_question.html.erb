@@ -25,6 +25,8 @@
     <div class="question-date">
       <% if question.author.present? %>
         <%= link_to "@#{question.author.username}", user_path(question.author) %>
+        <% else %>
+      Anonymous
       <% end %>
     </div>
   </div>
