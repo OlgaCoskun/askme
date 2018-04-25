@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
-    @question.author = current_user
+    @question[:author_id] = current_user.id if current_user.present?
 
     if @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
