@@ -23,8 +23,8 @@
 
     <%# Добавим ссылку на автора вопроса %>
     <div class="question-date">
-      <% if question.author.present? %>
-        <%= link_to "@#{question.author.username}", user_path(question.author) %>
+      <% if question.author_id.present? %>
+        <%= link_to "@#{question.author.username}", user_path(question.author_id) %>
       <% end %>
     </div>
   </div>
