@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :load_user, except: [:index, :create, :new]
-  before_action :authorize_user, except: [:index, :new, :create, :show]
+  before_action :load_user, except: [:index, :create, :new, :destroy]
+  before_action :authorize_user, except: [:index, :new, :create, :show, :destroy]
 
   def index
     @users = User.all
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    current_user.destroy
+    User.find(params[:id]).destroy
     redirect_to root_url
   end
 
