@@ -17,7 +17,7 @@
   </h2>
 
   <div class="buffer-both">
-    <%= link_to 'Удалить профиль', @user, method: :delete if current_user == @user %>
+    <%= link_to 'Удалить профиль', @user,  data: {confirm: "Are you sure?))"}, method: :delete if current_user == @user %>
   </div>
 </div>
 
