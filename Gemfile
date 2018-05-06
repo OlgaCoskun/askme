@@ -10,6 +10,7 @@ end
 gem 'rails', '~> 5.1.5'
 gem 'jquery-rails'
 gem 'uglifier'
+
 # Use sqlite3 as the database for Active Record
 
 # Use Puma as the app server
