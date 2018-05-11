@@ -2,6 +2,7 @@ class Question < ApplicationRecord
 
   belongs_to :user
   belongs_to :author, class_name: 'User', optional: true
+  has_and_belongs_to_many :tags, dependent: :destroy # при удалении вопроса, удалять хештег
 
   validates :user, presence: true
   # Проверка максимальной длины текста вопроса (максимум 255 символов)
