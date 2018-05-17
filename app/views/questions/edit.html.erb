@@ -1,6 +1,9 @@
-<h1>Editing Question</h1>
+<%# Страница редактирования вопроса %>
+<div class="container content-wrapper buffer-both">
+  <h1 class="title-medium">Вопрос</h1>
 
-<%= render 'form', question: @question %>
-
-<%= link_to 'Show', @question %> |
-<%= link_to 'Back', questions_path %>
+  <div class="column-1-2">
+    <%# Подключаем паршиал app/views/questions/_form.html.erb %>
+    <%= render 'form' %>
+  </div>
+</div>

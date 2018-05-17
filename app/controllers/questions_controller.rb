@@ -10,7 +10,9 @@ class QuestionsController < ApplicationController
 
     @question[:author_id] = current_user.id if current_user.present?
 
-    if @question.save
+    # Проверяем капчу вместе с сохранением вопроса. Если в капче была допущена
+    # ошибка, она будет добавлена в ошибки @question.errors.
+    if check_captcha(@question) && @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -57,5 +59,9 @@ class QuestionsController < ApplicationController
     else
       params.require(:question).permit(:user_id, :text)
     end
+  end
+
+  def check_captcha(model)
+    current_user.present? || verify_recaptcha(model: model)
   end
 end
