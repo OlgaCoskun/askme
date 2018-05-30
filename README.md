@@ -1,17 +1,10 @@
-# askme
-askme приложение типа https://ask.fm/
-
-***
-Askme is a social network. A purpose of the one is to get answers to your questions.
-
-##### Web page:
-[Askme](http://askme-dude.herokuapp.com)
+# Game - Who wants to be a millionaire
 
 ### Launching
 ***
 ##### Requirements:
 * Ruby version _>= 2.3.0_
-* Rails version >= 5.0
+* Rails version >= 4.0
 
 ##### Commands
 Clone the repository to your local machine and run following commands:
