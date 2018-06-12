@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
 
   # Ресурс вопросов (кроме экшенов :show, :new, :index)
-  resources :questions, except: [:show, :new, :index]
+  resources :questions, except: [:show, :new, :index] do
+    resources :tag, only: [:new, :create, :destroy]
+  end
 end

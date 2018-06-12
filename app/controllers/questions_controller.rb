@@ -12,7 +12,8 @@ class QuestionsController < ApplicationController
 
     # Проверяем капчу вместе с сохранением вопроса. Если в капче была допущена
     # ошибка, она будет добавлена в ошибки @question.errors.
-    if check_captcha(@question) && @question.save
+    if check_captcha(@question) && check_hashtags && @question.save
+
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -20,7 +21,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
+    if @question.update(question_params) && check_hashtags
       redirect_to user_path(@question.user), notice: 'Вопрос сохранен'
     else
       render :edit
@@ -63,5 +64,20 @@ class QuestionsController < ApplicationController
 
   def check_captcha(model)
     current_user.present? || verify_recaptcha(model: model)
+  end
+
+  def check_hashtags
+    reg = /#[\p{L}0-9_]{1,30}/
+    hashtag_names = (@question.text + @question.answer.to_s).scan(reg)
+
+    hashtag_names.each do |hashtag|
+      tag = Tag.new
+      if hashtag.nil?
+        tag = Tag.save(name: hashtag)
+        @question.tags << tag
+      else
+        tag.update(name: hashtag)
+      end
+    end
   end
 end

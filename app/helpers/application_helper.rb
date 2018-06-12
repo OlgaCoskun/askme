@@ -44,7 +44,7 @@ module ApplicationHelper
     content_tag 'span', '', class: "fa fa-#{icon_class}"
   end
 
-  # def word_with_tag
+  # def word_with_tag(word)
   #   reg = /#[\p{L}0-9_]{1,55}/
   #   tag = @question.scan(reg)
   # end

@@ -6,7 +6,8 @@ class Question < ApplicationRecord
 
   validates :user, :text, presence: true
   # Проверка максимальной длины текста вопроса (максимум 255 символов)
-  validates :text, length: { maximum: 255 }
+  validates :text, length: {maximum: 255}
+
 
   # # демонстрация жизненного цикла объекта
   # # навесили на все популярные коллбэки свои методы
