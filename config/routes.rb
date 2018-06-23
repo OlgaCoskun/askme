@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Ресурс вопросов (кроме экшенов :show, :new, :index)
   resources :questions, except: [:show, :new, :index] do
-    resources :tag, only: [:new, :create, :destroy]
+    resources :tag, only: [:new, :index, :show, :create, :destroy]
   end
+
 end
