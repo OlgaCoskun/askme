@@ -72,7 +72,7 @@ class QuestionsController < ApplicationController
 
     hashtag_names.each do |hashtag|
       tag = Tag.new
-      if hashtag.nil?
+      if tag.nil?
         tag = Tag.save(name: hashtag)
         @question.tags << tag
       else
@@ -81,3 +81,14 @@ class QuestionsController < ApplicationController
     end
   end
 end
+
+
+# hashtag_names.each do |hashtag|
+#   tag = Tag.new
+#   if hashtag.nil?
+#     tag = Tag.save(name: hashtag)
+#     @question.tags << tag
+#   else
+#     tag.update(name: hashtag)
+#   end
+# end
