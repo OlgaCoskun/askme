@@ -1,7 +1,6 @@
 class Tag < ApplicationRecord
   has_and_belongs_to_many :questions, dependent: :destroy
 
-  validates :name, format: {with: /#[\p{L}0-9_]{1,30}/}
   validates :name, uniqueness: true
   validates :name, presence: true,
             uniqueness: {case_sensitive: false}
