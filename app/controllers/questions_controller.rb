@@ -71,17 +71,13 @@ class QuestionsController < ApplicationController
   def check_hashtags
     reg = /#[\p{L}0-9_]{1,30}/
 
-    hashtag_names = (@question.text + '' + @question.answer.to_s).scan(reg)
+    hashtag_names = (@question.text + ' ' + @question.answer.to_s).scan(reg)
     hashtag_names.map! {|hashtag| hashtag.delete('#')}
 
     hashtag_names.each do |hashtag|
       tag = Tag.where(name: hashtag).first
-      if tag.nil?
-        tag = Tag.create(name: hashtag)
-        @question.tags << tag
-      else
-        @question.tags << tag
-      end
+      tag = Tag.create(name: hashtag) if tag.nil?
+      @question.tags << tag
     end
   end
 end
