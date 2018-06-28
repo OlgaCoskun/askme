@@ -2,3 +2,7 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+.micro_hashtag{
+  color: #005a55;
+  font-size: 12px;
+}

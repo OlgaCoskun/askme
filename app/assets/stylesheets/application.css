@@ -27,6 +27,7 @@
  *= require layout
  *= require users
  *= require questions
+ *= require tags
  *
  * Подключаем сам файл application.css. Если бы ниже были правила css стилей,
  * они тоже попали бы в конечный стилевой файл.

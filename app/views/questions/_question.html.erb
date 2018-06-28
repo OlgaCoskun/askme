@@ -8,16 +8,17 @@
     <%# Текст вопроса %>
     <% if question.text.present? %>
       <div class="question-answer text-lead">
-        <%= question.answer %>
+        <%= render_with_hashtag(question.text) %>
       </div>
     <% end %>
 
     <!--    Хештеги из вопроса-->
-    <% scan_for_hashtags(question.text).each do |tag| %>
-      <div class="question-text micro_hashtag">
-        <%= link_to tag, tag_path(Tag.find_by(name: tag)) %>
-      </div>
-    <% end %>
+      <% question.tags.uniq.each do |tag| %>
+        <div class="question-text micro_hashtag">
+          <%= link_to tag.name, tag_path(name: tag.name) %>
+        </div>
+      <% end %>
+
 
     <%# Текст ответа, если он есть %>
     <% if question.answer.present? %>
