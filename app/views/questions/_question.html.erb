@@ -12,7 +12,7 @@
       </div>
     <% end %>
 
-    <!--    Хештеги из вопроса-->
+    <!--    Хештеги из вопроса и ответа-->
       <% question.tags.uniq.each do |tag| %>
         <div class="question-text micro_hashtag">
           <%= link_to tag.name, tag_path(name: tag.name) %>
