@@ -46,6 +46,6 @@ module ApplicationHelper
 
   # def word_with_tag(word)
   #   reg = /#[\p{L}0-9_]{1,55}/
-  #   tag = @question.scan(reg)
+  #   tag = word.scan(reg).uniq
   # end
 end
