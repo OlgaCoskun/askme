@@ -12,10 +12,11 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question[:author_id] = current_user.id if current_user.present?
+    @question.update_hashtags
 
     # Проверяем капчу вместе с сохранением вопроса. Если в капче была допущена
     # ошибка, она будет добавлена в ошибки @question.errors.
-    if check_captcha(@question) && check_hashtags && @question.save
+    if check_captcha(@question) && @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -23,7 +24,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params) && check_hashtags
+    if @question.update(question_params) && @question.update_hashtags
       redirect_to user_path(@question.user), notice: 'Вопрос сохранен'
     else
       render :edit
@@ -68,19 +69,19 @@ class QuestionsController < ApplicationController
     current_user.present? || verify_recaptcha(model: model)
   end
 
-  def check_hashtags
-    @question.tags.destroy_all #удаляем связи вопросов и хештегов
-
-    reg = /#[\p{L}0-9_]{1,30}/
-
-    hashtag_names = (@question.text + ' ' + @question.answer.to_s).scan(reg)
-    hashtag_names.uniq!
-    hashtag_names.map! {|hashtag| hashtag.delete('#')}
-
-    hashtag_names.each do |hashtag|
-      tag = Tag.where(name: hashtag).first
-      tag = Tag.create(name: hashtag) if tag.nil?
-      @question.tags << tag
-    end
-  end
+  # def check_hashtags
+  #   @question.tags.destroy_all #удаляем связи вопросов и хештегов
+  #
+  #   reg = /#[\p{L}0-9_]{1,30}/
+  #
+  #   hashtag_names = (@question.text + ' ' + @question.answer.to_s).scan(reg)
+  #   hashtag_names.uniq!
+  #   hashtag_names.map! {|hashtag| hashtag.delete('#')}
+  #
+  #   hashtag_names.each do |hashtag|
+  #     tag = Tag.where(name: hashtag).first
+  #     tag = Tag.create(name: hashtag) if tag.nil?
+  #     @question.tags << tag
+  #   end
+  # end
 end

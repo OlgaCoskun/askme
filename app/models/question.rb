@@ -8,33 +8,19 @@ class Question < ApplicationRecord
   # Проверка максимальной длины текста вопроса (максимум 255 символов)
   validates :text, length: {maximum: 255}
 
+  def update_hashtags
+    self.tags.destroy_all #удаляем связи вопросов и хештегов
 
-  # # демонстрация жизненного цикла объекта
-  # # навесили на все популярные коллбэки свои методы
-  # before_validation :before_validation
-  # after_validation :after_validation
-  # before_save :before_save
-  # before_create :before_create
-  # after_create :after_create
-  # after_save :after_save
-  #
-  # before_update :before_update
-  # after_update :after_update
-  #
-  # before_destroy :before_destroy
-  # after_destroy :after_destroy
-  #
-  # private
-  #
-  # # динамически сгенерируем пару методов для каждого действия,
-  # # используя возможности руби
-  # ['validation', 'save', 'create', 'update', 'destroy'].each do |action|
-  #   ['before', 'after'].each do |time|
-  #     define_method("#{time}_#{action}") do
-  #       puts "**********> #{time} #{action}"
-  #     end
-  #
-  #   end
-  # end
+    reg = /#[\p{L}0-9_]{1,30}/
 
+    hashtag_names = (self.text + ' ' + self.answer.to_s).scan(reg)
+    hashtag_names.uniq!
+    hashtag_names.map! {|hashtag| hashtag.delete('#')}
+
+    hashtag_names.each do |hashtag|
+      tag = Tag.where(name: hashtag).first
+      tag = Tag.create(name: hashtag) if tag.nil?
+      self.tags << tag
+    end
+  end
 end
