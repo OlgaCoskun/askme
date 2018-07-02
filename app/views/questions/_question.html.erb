@@ -12,17 +12,17 @@
       </div>
     <% end %>
 
-    <!--    Хештеги из вопроса и ответа-->
-    <% question.tags.each do |tag| %>
-      <div class="question-text micro_hashtag">
-        <%= link_to tag.name, tag_path(name: tag.name) %>
-      </div>
-    <% end %>
-
     <%# Текст ответа, если он есть %>
     <% if question.answer.present? %>
       <div class="question-answer text-lead">
         <%= render_with_hashtag(question.answer) %>
+      </div>
+    <% end %>
+
+    <!--    Хештеги из вопроса и ответа-->
+    <% question.tags.each do |tag| %>
+      <div class="question-text micro_hashtag">
+        <%= link_to '#'+tag.name, tag_path(name: tag.name) %>
       </div>
     <% end %>
 

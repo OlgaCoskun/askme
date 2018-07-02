@@ -68,20 +68,4 @@ class QuestionsController < ApplicationController
   def check_captcha(model)
     current_user.present? || verify_recaptcha(model: model)
   end
-
-  # def check_hashtags
-  #   @question.tags.destroy_all #удаляем связи вопросов и хештегов
-  #
-  #   reg = /#[\p{L}0-9_]{1,30}/
-  #
-  #   hashtag_names = (@question.text + ' ' + @question.answer.to_s).scan(reg)
-  #   hashtag_names.uniq!
-  #   hashtag_names.map! {|hashtag| hashtag.delete('#')}
-  #
-  #   hashtag_names.each do |hashtag|
-  #     tag = Tag.where(name: hashtag).first
-  #     tag = Tag.create(name: hashtag) if tag.nil?
-  #     @question.tags << tag
-  #   end
-  # end
 end

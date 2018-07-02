@@ -9,18 +9,12 @@ class Question < ApplicationRecord
   validates :text, length: {maximum: 255}
 
   def update_hashtags
-    self.tags.destroy_all #удаляем связи вопросов и хештегов
+    def update_hashtags
+      self.tags.destroy_all
 
-    reg = /#[\p{L}0-9_]{1,30}/
-
-    hashtag_names = (self.text + ' ' + self.answer.to_s).scan(reg)
-    hashtag_names.uniq!
-    hashtag_names.map! {|hashtag| hashtag.delete('#')}
-
-    hashtag_names.each do |hashtag|
-      tag = Tag.where(name: hashtag).first
-      tag = Tag.create(name: hashtag) if tag.nil?
-      self.tags << tag
+      (text + ' ' + answer.to_s).scan(/#[[:word:]]+/).uniq.each do |hashtag|
+        self.tags << Tag.first_or_create_by!(name: hashtag.delete('#'))
+      end
     end
   end
 end
