@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   # Проверка максимальной длины юзернейма пользователя (не больше 40 символов)
   # Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
-  validates_format_of :username, with: /^[a-z0-9_]+/
+  validates_format_of :username, with: /^[a-z0-9_]+/, multiline: true
   validates :username, length: { maximum: 40 }
 
   # before_save { username.downcase! }
